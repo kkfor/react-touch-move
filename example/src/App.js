@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TouchMove from '../../src/touchMove'
+import TouchMove from '../../src'
 
 class App extends Component {
   render() {
