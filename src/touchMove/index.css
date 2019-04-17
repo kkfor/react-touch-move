@@ -1,0 +1,15 @@
+.main {
+  font-size: 33px;
+}
+.t-block {
+  width: 100%;
+  overflow: hidden;
+}
+.t-content {
+  display: inline-block;
+  white-space: nowrap;
+}
+.t-content-animate {
+  transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-duration: .7s;
+}
