@@ -5,34 +5,37 @@ class TouchMove extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      oLeft: 2
+      oLeft: 0
     }
-    this.$vm = null
+    this.$vm = null    // 移动dom
+    this.$root = null  // 外层包括dom
 
     this.oW = null     // 距离左侧的距离
+    this.oH = null     // 距离顶部的距离
 
     this.aW = null     // 块的宽度
 
     // 惯性
     this.preX = 0        // 偏移开始位置
-    this.preTime = null  // 偏移开始时间
+    this.sTime = null    // 偏移开始时间
     this.speed = null    // 惯性速度
 
     this.htmlWidth = null
   }
 
   componentDidMount() {
-    this.htmlWidth = document.documentElement.clientWidth;
-    // this.htmlHeight = document.documentElement.clientHeight;
   }
-
+  
   onTouchStart(e) {
+    this.htmlWidth = document.documentElement.clientWidth;
+    this.htmlHeight = document.documentElement.clientHeight;
+
     this.$vm.className = 't-content'
     e = e.touches[0]
     this.oW = e.clientX - this.$vm.getBoundingClientRect().left
     this.aW = this.$vm.getBoundingClientRect().width
     this.preX = this.state.oLeft
-    this.preTime = Date.now()
+    this.sTime = Date.now()
     // this.oH = e.clientY - this.$vm.getBoundingClientRect().top
   }
 
@@ -41,14 +44,14 @@ class TouchMove extends Component {
     e = e.touches[0]
 
     // 计算瞬间速度
-    let time = Date.now() - this.preTime
+    let time = Date.now() - this.sTime
     let dist = e.clientX - this.preX
 
     this.speed = dist/time
 
     console.log(this.speed, 'xxx')
 
-    this.preTime = Date.now()
+    this.sTime = Date.now()
     this.preX = e.clientX
 
 
@@ -68,7 +71,7 @@ class TouchMove extends Component {
 
   onTouchEnd() {
     this.$vm.className = 't-content t-content-animate'
-    const sTime = Date.now() - this.preTime
+    const sTime = Date.now() - this.sTime
 
     if(this.state.oLeft > 0) {
       this.setState({
@@ -100,7 +103,7 @@ class TouchMove extends Component {
   render() {
     const { oLeft } = this.state
     return (
-      <div className='main'>
+      <div className='t-main'>
         <div className='t-block'>
           <div
             className='t-content'
