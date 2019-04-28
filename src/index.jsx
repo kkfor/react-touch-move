@@ -28,8 +28,8 @@ class TouchMove extends Component {
   }
   
   onTouchStart(e) {
-    this.rootWidth = this.$root.clientWidth;
-    this.rootHeight = this.$root.clientHeight;
+    this.rootWidth = this.$root.getBoundingClientRect().width;
+    this.rootHeight = this.$root.getBoundingClientRect().height;
 
     this.$vm.className = 't-content'
     e = e.touches[0]
