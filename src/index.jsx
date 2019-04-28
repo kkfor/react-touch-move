@@ -14,21 +14,22 @@ class TouchMove extends Component {
     this.oH = null     // 距离顶部的距离
 
     this.aW = null     // 块的宽度
+    this.aH = null     // 块的高度
 
     // 惯性
     this.preX = 0        // 偏移开始位置
     this.sTime = null    // 偏移开始时间
     this.speed = null    // 惯性速度
 
-    this.htmlWidth = null
+    this.rootWidth = null
   }
 
   componentDidMount() {
   }
   
   onTouchStart(e) {
-    this.htmlWidth = document.documentElement.clientWidth;
-    this.htmlHeight = document.documentElement.clientHeight;
+    this.rootWidth = this.$root.clientWidth;
+    this.rootHeight = this.$root.clientHeight;
 
     this.$vm.className = 't-content'
     e = e.touches[0]
@@ -49,8 +50,6 @@ class TouchMove extends Component {
 
     this.speed = dist/time
 
-    console.log(this.speed, 'xxx')
-
     this.sTime = Date.now()
     this.preX = e.clientX
 
@@ -58,8 +57,8 @@ class TouchMove extends Component {
     let oLeft = e.clientX - this.oW
     if (oLeft > 130) {
       oLeft = 130
-    } else if (oLeft < (this.htmlWidth - this.aW) - 130 ) {
-      oLeft = this.htmlWidth - this.aW - 130
+    } else if (oLeft < (this.rootWidth - this.aW) - 130 ) {
+      oLeft = this.rootWidth - this.aW - 130
     }
 
     this.setState({
@@ -71,15 +70,14 @@ class TouchMove extends Component {
 
   onTouchEnd() {
     this.$vm.className = 't-content t-content-animate'
-    const sTime = Date.now() - this.sTime
 
     if(this.state.oLeft > 0) {
       this.setState({
         oLeft: 0
       })
-    } else if (this.state.oLeft < (this.htmlWidth - this.aW)) {
+    } else if (this.state.oLeft < (this.rootWidth - this.aW)) {
       this.setState({
-        oLeft: this.htmlWidth - this.aW
+        oLeft: this.rootWidth - this.aW
       })
     } else {
       const speed = this.speed * 150
@@ -87,8 +85,8 @@ class TouchMove extends Component {
   
       if(oLeft > 0) {
           oLeft = 0
-      } else if (oLeft < (this.htmlWidth - this.aW)) {
-        oLeft = this.htmlWidth - this.aW
+      } else if (oLeft < (this.rootWidth - this.aW)) {
+        oLeft = this.rootWidth - this.aW
       }
 
       this.setState({
@@ -98,12 +96,15 @@ class TouchMove extends Component {
       this.preX = this.state.oLeft
     }
 
+    // 移动完毕初始化speed
+    this.speed = 0
+
   }
 
   render() {
     const { oLeft } = this.state
     return (
-      <div className='t-main'>
+      <div className='t-main' ref={$root => this.$root = $root}>
         <div className='t-block'>
           <div
             className='t-content'
