@@ -11,7 +11,7 @@ class App extends Component {
         <div>react-touch-move</div>
         <div>react-touch-move</div>
         <div>react-touch-move</div>
-        <TouchMove />
+        <TouchMove>this is contentthis is contentthis is contentthis is contentthis is contentthis is content</TouchMove>
         <div>react-touch-move</div>
         <div>react-touch-move</div>
         <div>react-touch-move</div>

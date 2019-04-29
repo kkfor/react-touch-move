@@ -27,6 +27,7 @@ class TouchMove extends Component {
   componentDidMount() {
   }
   
+  // 开始移动
   onTouchStart(e) {
     this.rootWidth = this.$root.getBoundingClientRect().width;
     this.rootHeight = this.$root.getBoundingClientRect().height;
@@ -40,6 +41,7 @@ class TouchMove extends Component {
     // this.oH = e.clientY - this.$vm.getBoundingClientRect().top
   }
 
+  // 移动中
   onTouchMove(e) {
 
     e = e.touches[0]
@@ -68,6 +70,7 @@ class TouchMove extends Component {
 
   }
 
+  // 移动结束
   onTouchEnd() {
     this.$vm.className = 't-content t-content-animate'
 
@@ -115,7 +118,7 @@ class TouchMove extends Component {
             style={{
               transform: `translateX(${oLeft}px)`
             }}>
-              横向滑动这行横向滑动这行横向滑动这行横向滑动这行横向滑动这行横向滑动这行
+              {this.props.children}
           </div>
         </div>
       </div>
