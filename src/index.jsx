@@ -21,7 +21,8 @@ class TouchMove extends Component {
     this.sTime = null    // 偏移开始时间
     this.speed = null    // 惯性速度
 
-    this.rootWidth = null
+    this.rootWidth = null    // 容器宽度
+    this.rootHeight = null   // 容器高度
   }
 
   componentDidMount() {
@@ -34,6 +35,7 @@ class TouchMove extends Component {
 
     this.$vm.className = 't-content'
     e = e.touches[0]
+    
     this.oW = e.clientX - this.$vm.getBoundingClientRect().left
     this.aW = this.$vm.getBoundingClientRect().width
     this.preX = this.state.oLeft
@@ -74,17 +76,17 @@ class TouchMove extends Component {
   onTouchEnd() {
     this.$vm.className = 't-content t-content-animate'
 
+    let oLeft
     if(this.state.oLeft > 0) {
-      this.setState({
-        oLeft: 0
-      })
+      // 左侧外部移动回弹
+      oLeft = 0
     } else if (this.state.oLeft < (this.rootWidth - this.aW)) {
-      this.setState({
-        oLeft: this.rootWidth - this.aW
-      })
+      // 右侧外部
+        oLeft = this.rootWidth - this.aW
     } else {
+      // 滚动
       const speed = this.speed * 150
-      let oLeft = this.state.oLeft + speed
+      oLeft = this.state.oLeft + speed
   
       if(oLeft > 0) {
           oLeft = 0
@@ -92,12 +94,11 @@ class TouchMove extends Component {
         oLeft = this.rootWidth - this.aW
       }
 
-      this.setState({
-        oLeft
-      })
-  
-      this.preX = this.state.oLeft
     }
+    this.preX = this.state.oLeft
+    this.setState({
+      oLeft
+    })
 
     // 移动完毕初始化speed
     this.speed = 0
