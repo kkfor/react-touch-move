@@ -45,7 +45,6 @@ class TouchMove extends Component {
 
   // 移动中
   onTouchMove(e) {
-
     e = e.touches[0]
 
     // 计算瞬间速度
@@ -57,12 +56,15 @@ class TouchMove extends Component {
     this.sTime = Date.now()
     this.preX = e.clientX
 
-
     let oLeft = e.clientX - this.oW
-    if (oLeft > 130) {
-      oLeft = 130
-    } else if (oLeft < (this.rootWidth - this.aW) - 130 ) {
-      oLeft = this.rootWidth - this.aW - 130
+    console.log(e.clientX, this.oW)
+    // console.log(e.clientX - this.oW)
+    if (oLeft > 0) {
+      oLeft = Math.sqrt((e.clientX - this.oW))*7
+      // console.log(oLeft)
+    } else if (oLeft < (this.rootWidth - this.aW) ) {
+      
+      // oLeft = e.clientX - this.oW this.rootWidth - this.aW - (this.rootWidth - e.clientX)
     }
 
     this.setState({
