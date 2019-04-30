@@ -57,14 +57,14 @@ class TouchMove extends Component {
     this.sTime = Date.now()
     this.preX = e.clientX
 
-    let maxLeft = this.rootWidth - this.aW
+    // 距离左侧最大距离
+    const maxLeft = this.rootWidth - this.aW
 
     let oLeft = e.clientX - this.oW
     if (oLeft > 0) {
-      oLeft = Math.sqrt(e.clientX - this.oW)*7
+      oLeft = Math.sqrt(oLeft)*7
     } else if (oLeft < maxLeft ) {
-      oLeft = maxLeft - Math.sqrt(maxLeft- (e.clientX - this.oW)) * 7
-      // oLeft = e.clientX - this.oW this.rootWidth - this.aW - (this.rootWidth - e.clientX)
+      oLeft = maxLeft - Math.sqrt(maxLeft - oLeft)*7
     }
 
     this.setState({
