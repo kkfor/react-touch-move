@@ -10,7 +10,7 @@ class TouchMove extends Component {
     this.$vm = null    // 移动dom
     this.$root = null  // 外层包括dom
 
-    this.oW = null     // 距离左侧的距离
+    this.oW = null     // 点击位置距离左侧的距离
     this.oH = null     // 距离顶部的距离
 
     this.aW = null     // 块的宽度
@@ -56,15 +56,14 @@ class TouchMove extends Component {
     this.sTime = Date.now()
     this.preX = e.clientX
 
+    // 距离左侧最大距离
+    const maxLeft = this.rootWidth - this.aW
+
     let oLeft = e.clientX - this.oW
-    console.log(e.clientX, this.oW)
-    // console.log(e.clientX - this.oW)
     if (oLeft > 0) {
-      oLeft = Math.sqrt((e.clientX - this.oW))*7
-      // console.log(oLeft)
-    } else if (oLeft < (this.rootWidth - this.aW) ) {
-      
-      // oLeft = e.clientX - this.oW this.rootWidth - this.aW - (this.rootWidth - e.clientX)
+      oLeft = Math.sqrt(oLeft)*7
+    } else if (oLeft < maxLeft ) {
+      oLeft = maxLeft - Math.sqrt(maxLeft - oLeft)*7
     }
 
     this.setState({
