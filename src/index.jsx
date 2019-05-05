@@ -28,9 +28,12 @@ class TouchMove extends Component {
     this.rootHeight = null   // 容器高度
     this.rootLeft = 0        // 容器到左侧的距离
     this.rootTop = 0         // 到顶部的距离
+
   }
 
-  componentDidMount() {
+  static defaultProps = {
+    x: true,
+    y: false
   }
 
   // 开始移动
@@ -156,6 +159,7 @@ class TouchMove extends Component {
 
   render() {
     const { oLeft, oTop } = this.state
+    const { x, y} = this.props
     return (
       <div className='t-main' ref={$root => this.$root = $root}>
         <div className='t-block'>
@@ -166,7 +170,7 @@ class TouchMove extends Component {
             onTouchEnd={e => this.onTouchEnd(e)}
             ref={$vm => this.$vm = $vm}
             style={{
-              transform: `translate(${oLeft}px, ${oTop}px)`
+              transform: `translate(${x ? oLeft : 0}px, ${y ? oTop : 0}px)`
             }}>
             {this.props.children}
           </div>
